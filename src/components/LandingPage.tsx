@@ -1,19 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import birdImage from '../assets/Vector.png';
 
 interface BirdProps {
-  x: number;
-  y: number;
-}
-
-interface CloudProps {
-  size: 'large' | 'medium';
-  x: number;
-  y: number;
-  opacity: number;
-}
-
-interface Position {
   x: number;
   y: number;
 }
@@ -122,11 +109,11 @@ const LandingPage: React.FC = () => {
         </main>
 
         {/* Static Birds */}
-        <Bird x={10} y={30} />
-        <Bird x={25} y={50} />
-        <Bird x={75} y={35} />
-        <Bird x={65} y={65} />
-        <Bird x={90} y={55} />
+        <Bird x={10} y={30} scrollY={scrollY} />
+        <Bird x={25} y={50} scrollY={scrollY} />
+        <Bird x={75} y={35} scrollY={scrollY} />
+        <Bird x={65} y={65} scrollY={scrollY} />
+        <Bird x={90} y={55} scrollY={scrollY} />
       </div>
 
       <style>{`
@@ -164,20 +151,23 @@ const LandingPage: React.FC = () => {
   );
 };
 
-const Bird: React.FC<BirdProps> = ({ x, y }) => {
+const Bird: React.FC<BirdProps & { scrollY: number }> = ({ x, y, scrollY }) => {
   return (
     <div 
       className="absolute pointer-events-none z-20"
       style={{
         left: `${x}%`,
         top: `${y}%`,
+        transform: `translateY(${scrollY * 0.1}px)`,
       }}
     >
-      <img 
-        src={birdImage} 
-        alt="Flying bird" 
-        className="w-12 h-12 md:w-16 md:h-16 object-contain"
-      />
+      <svg 
+        viewBox="0 0 24 24" 
+        fill="currentColor" 
+        className="w-12 h-12 md:w-16 md:h-16 text-gray-800 opacity-40"
+      >
+        <path d="M23 11.5L19.95 10.37C19.69 9.22 19.04 8.56 17.76 7.5C16.17 6.2 14.96 5.5 13.13 5.5C11.3 5.5 9.58 6.07 8.09 7.24L3 5.5L4.5 7L8.09 8.24C7.68 8.99 7.5 9.78 7.5 10.5C7.5 12.7 9.3 14.5 11.5 14.5C12.14 14.5 12.76 14.38 13.32 14.15L15.45 16.28C15.32 16.5 15.25 16.74 15.25 17C15.25 17.83 15.92 18.5 16.75 18.5C17.58 18.5 18.25 17.83 18.25 17C18.25 16.17 17.58 15.5 16.75 15.5C16.5 15.5 16.26 15.57 16.04 15.7L13.91 13.57C14.57 13.08 15.08 12.42 15.37 11.63L19.95 12.87L23 11.5Z"/>
+      </svg>
     </div>
   );
 };
